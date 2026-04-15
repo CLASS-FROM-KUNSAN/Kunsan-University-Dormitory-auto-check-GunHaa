@@ -103,12 +103,11 @@ async def run():
 
         # 4. 학생생활관 -> 일일체크신청 클릭
         print("4. '학생생활관' -> '일일체크신청' 찾는 중...")
-        await asyncio.sleep(60)
+        await asyncio.sleep(3)
         await new_tab.get_by_text("학생생활관").first.click()
-        await asyncio.sleep(30)
+        await asyncio.sleep(1)
         await new_tab.get_by_text("일일체크신청").last.click()
 
-    
         # 5. 저장 및 예 클릭
         print("5. '저장' 버튼 클릭 시도...")
         await asyncio.sleep(5) 
