@@ -111,14 +111,14 @@ async def run():
             await dorm_menu.click(force=True)
             print("   - '학생생활관' 클릭 완료")
     
-        # 잠시 대기 후 '일일체크신청' 찾기
-        # 만약 프레임 문제라면 아래 줄에서 에러가 날 것입니다.
-        target = new_tab.get_by_text("일일체크신청").last
+            # 잠시 대기 후 '일일체크신청' 찾기
+            # 만약 프레임 문제라면 아래 줄에서 에러가 날 것입니다.
+            target = new_tab.get_by_text("일일체크신청").last
     
-        # 요소가 나타날 때까지 대기 (최대 10초)
-        await target.wait_for(state="attached", timeout=10000)
-        await target.click()
-        print("✅ '일일체크신청' 클릭 성공!")
+            # 요소가 나타날 때까지 대기 (최대 10초)
+            await target.wait_for(state="attached", timeout=10000)
+            await target.click()
+            print("✅ '일일체크신청' 클릭 성공!")
 
         except Exception as e:
             print(f"❌ 실패 원인: {e}")
