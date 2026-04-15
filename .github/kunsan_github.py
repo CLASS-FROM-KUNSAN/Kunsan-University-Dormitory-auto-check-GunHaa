@@ -101,10 +101,10 @@ async def run():
         await asyncio.sleep(5) 
         await new_tab.get_by_text("학생서비스").first.click()
 
-        # 4. 학생생활관 -> 일일체크신청 클릭
-        print("4. '학생생활관' -> '일일체크신청' 찾는 중...")
+        # 4. 메뉴 클릭 (사이드바 열기)
+        print("4. 'MY MENU' -> '일일체크신청' 찾는 중...")
         await asyncio.sleep(3)
-        await new_tab.get_by_text("학생생활관").first.click()
+        await new_tab.get_by_text("MY MENU").first.click()
         await asyncio.sleep(1)
         await new_tab.get_by_text("일일체크신청").last.click()
 
