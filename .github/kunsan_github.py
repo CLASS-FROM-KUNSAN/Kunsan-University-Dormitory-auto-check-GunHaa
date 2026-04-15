@@ -103,29 +103,11 @@ async def run():
 
         # 4. 학생생활관 -> 일일체크신청 클릭
         print("4. '학생생활관' -> '일일체크신청' 찾는 중...")
+        await asyncio.sleep(3)
+        await new_tab.get_by_text("학생생활관").first.click()
+        await asyncio.sleep(1)
+        await new_tab.get_by_text("일일체크신청").last.click()
 
-        try:
-            # '학생생활관' 클릭 시도
-            dorm_menu = new_tab.get_by_text("학생생활관").first
-            await dorm_menu.scroll_into_view_if_needed() # 화면 안으로 가져오기
-            await dorm_menu.click(force=True)
-            print("   - '학생생활관' 클릭 완료")
-    
-            # 잠시 대기 후 '일일체크신청' 찾기
-            # 만약 프레임 문제라면 아래 줄에서 에러가 날 것입니다.
-            target = new_tab.get_by_text("일일체크신청").last
-    
-            # 요소가 나타날 때까지 대기 (최대 10초)
-            await target.wait_for(state="attached", timeout=10000)
-            await target.click()
-            print("✅ '일일체크신청' 클릭 성공!")
-
-        except Exception as e:
-            print(f"❌ 실패 원인: {e}")
-            # 실패한 순간의 화면을 저장합니다. (GitHub Actions Artifacts에서 확인 가능)
-            await new_tab.screenshot(path="error_debug.png", full_page=True)
-            print("📸 디버깅용 스크린샷 'error_debug.png' 저장됨")
-            raise e # 에러를 다시 던져서 전체 프로세스 중단
     
         # 5. 저장 및 예 클릭
         print("5. '저장' 버튼 클릭 시도...")
