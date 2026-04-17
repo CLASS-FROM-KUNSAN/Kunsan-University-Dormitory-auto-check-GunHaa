@@ -264,9 +264,7 @@ async def run():
         # 최종 종료 전 대기
         print("10. 모든 작업 완료. 브라우저를 종료합니다.")
         await asyncio.sleep(2)
-
-      
-
+        
         
         # 5초 대기 후 깔끔하게 종료
         await asyncio.sleep(5) 
