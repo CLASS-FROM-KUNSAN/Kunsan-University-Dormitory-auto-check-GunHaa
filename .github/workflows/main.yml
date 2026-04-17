@@ -2,7 +2,8 @@ name: Kunsan Daily Check
 
 on:
   schedule:
-    - cron: '0 23 * * *' # 한국 시간(KST) 매일 오전 8:00 (UTC 23:00)
+    - cron: '0 23 * * *'          # KST 매일 오전 8:00 (UTC 23:00)
+    - cron: '30 3,10,12,13 * * *' # KST 매일 오후 12:30, 7:30, 9:30, 10:30 (UTC 03:30, 10:30, 12:30, 13:30)
   workflow_dispatch:
     inputs:
       message:
@@ -43,5 +44,3 @@ jobs:
           USER_PW: ${{ secrets.USER_PW }}
         # 파일이 루트 디렉토리에 있다면 아래 명령어로 충분합니다.
         run: python .github/kunsan_github.py
-
-        
