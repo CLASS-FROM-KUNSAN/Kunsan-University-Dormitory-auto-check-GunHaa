@@ -201,6 +201,73 @@ async def run():
         print("👀 브라우저 화면에서 '일일체크'가 정상적으로 되었는지 확인하세요.")
         print("="*50)
 
+
+
+        
+        # 8. 팝업 창 닫기
+        print("7. '닫기' 버튼 클릭 시도...")
+        await asyncio.sleep(3) 
+
+        # 엔터키 강제 입력
+        await new_tab.keyboard.press("Enter")
+        print("   - [시도] 엔터키 입력 완료")
+        await asyncio.sleep(1)
+
+        
+        # 9. '로그아웃' 버튼 클릭 (좌표 기반 물리 클릭)
+        print("8. '로그아웃' 버튼 클릭 시도 (좌표 및 물리 클릭)...")
+        
+        try:
+            # [보안] 알림창 자동 승인 (로그아웃 하시겠습니까? 확인)
+            new_tab.on("dialog", lambda dialog: dialog.accept())
+
+            # 1. '로그아웃' 버튼의 실제 위치(좌표) 찾기
+            # 모든 프레임을 뒤져서 버튼 객체를 가져옵니다.
+            target_element = None
+            for frame in new_tab.frames:
+                try:
+                    el = frame.get_by_text("로그아웃").first
+                    if await el.count() > 0 and await el.is_visible():
+                        target_element = el
+                        print(f"   - [{frame.name or '프레임'}]에서 버튼 위치 포착!")
+                        break
+                except: continue
+
+            if target_element:
+                # 버튼의 좌표 구하기 (x, y, width, height)
+                box = await target_element.bounding_box()
+                if box:
+                    # 버튼의 정중앙 좌표 계산
+                    center_x = box['x'] + box['width'] / 2
+                    center_y = box['y'] + box['height'] / 2
+                    
+                    print(f"   - 버튼 중심 좌표: ({center_x}, {center_y})")
+                    
+                    # 마우스를 해당 좌표로 이동 후 클릭 (실제 마우스 동작 시뮬레이션)
+                    await new_tab.mouse.move(center_x, center_y)
+                    await new_tab.mouse.click(center_x, center_y)
+                    print("   - 좌표 기반 물리 클릭 완료!")
+            else:
+                # 2. 버튼을 못 찾을 경우: 화면 우측 상단 강제 클릭 (최후의 수단)
+                # 보통 군산대 포털의 로그아웃은 우측 상단에 있으므로 대략적인 위치 클릭
+                print("   - 버튼 위치를 잡지 못해 우측 상단 영역(1150, 40)을 강제 클릭합니다.")
+                await new_tab.mouse.click(1150, 40) 
+
+        except Exception as e:
+            print(f"⚠️ 좌표 클릭 중 예외 발생: {e}")
+
+        # 클릭 신호가 서버에 도달할 시간 충분히 부여
+        print("9. 모든 과정 완료. 세션 종료 대기 중...")
+        await asyncio.sleep(5)
+
+
+        # 최종 종료 전 대기
+        print("10. 모든 작업 완료. 브라우저를 종료합니다.")
+        await asyncio.sleep(2)
+
+      
+
+        
         # 5초 대기 후 깔끔하게 종료
         await asyncio.sleep(5) 
         await browser.close()
