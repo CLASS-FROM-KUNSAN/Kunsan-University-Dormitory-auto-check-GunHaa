@@ -257,7 +257,7 @@ async def run():
             print(f"⚠️ 좌표 클릭 중 예외 발생: {e}")
 
         # 클릭 신호가 서버에 도달할 시간 충분히 부여
-        print("9. 모든 과정 완료. 세션 종료 대기 중...")
+        print("9. 세션 종료 대기 중...")
         await asyncio.sleep(5)
 
 
