@@ -2,14 +2,17 @@ name: Kunsan Daily Check
 
 on:
   schedule:
-    - cron: '0 23 * * *'          # KST 매일 오전 8:00 (UTC 23:00)
-    - cron: '30 3,10,12,13 * * *' # KST 매일 오후 12:30, 7:30, 9:30, 10:30 (UTC 03:30, 10:30, 12:30, 13:30)
+    - cron: '17 23 * * *'                 # KST 매일 오전 8:17 (UTC 23:17)
+    - cron: '37 3,10,12,13 * * *'         # KST 매일 오후 12:37, 7:37, 9:37, 10:37 (UTC 03:37, 10:37, 12:37, 13:37)
   workflow_dispatch:
     inputs:
       message:
         description: '단축어에서 보낼 메시지'
         required: true
         default: 'Hello from iPhone!'
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   check:
